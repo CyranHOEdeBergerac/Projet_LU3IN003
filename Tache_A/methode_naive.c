@@ -70,7 +70,8 @@ int dist_naif_rec(char*x,char*y,int i, int j, int c, int dist){
     }
     else{
         if (( i < len_x) && (j < len_y)){
-            dist = dist_naif_rec (x, y, i+1, j+1, c + cout_substitution( x[i], y[i]),dist);     //Le sujet indiquait de le faire avec i+1 et j+1 mais cela ne fonctionnait pas
+            dist = dist_naif_rec (x, y, i+1, j+1, c + cout_substitution( x[i], y[j]),dist);     //Le sujet indiquait de le faire avec i+1 et j+1 mais cela ne fonctionnait pas
+
         }
         if (i < len_x){
             dist = dist_naif_rec(x,y,i+1,j,c+ C_DEL, dist);
