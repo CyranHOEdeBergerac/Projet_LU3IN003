@@ -1,65 +1,92 @@
 #include"fonctions_lecture.h"
 
+/*IL Y A UN PROBLÈME POUR RECUPÉRER Y*/
+
 Couple_chaine* creer_couple_chaine(char*x, char* y, int n, int m){
-    printf("Là ?\n");
-/*Fonction permettant de créer et intialiser un couple de chaîne de caractères*/
-    Couple_chaine* res = (Couple_chaine*) malloc(sizeof(Couple_chaine));    //Allocation
-    printf("Après l'allocation dans creer couple\n");
-    res->x = x;                                                     //Remplissage des valeurs
+    Couple_chaine* res = (Couple_chaine*) malloc ( sizeof(Couple_chaine) );
+
+    if(res ==NULL){
+        printf("Erreur d'allocation\n");
+        return NULL;
+    }
+
+    res->x = x;
     res->y = y;
     res->n = n;
     res->m = m;
 
-    return res;                                                             //On retourne le résultat
+    return res;
+}
+
+void supprimer_couple_chaine(Couple_chaine* couple){
+    free(couple->x);
+    free(couple->y);
+    free(couple);
+
 }
 
 void afficher_couple_chaine(Couple_chaine* couple){
-    printf("%d\n%d\n%s\n%s",couple->n,couple->m, couple->x, couple->y);
+    printf("n = %d, m = %d\n x = %s.\n y = %s.\n",couple->n,couple->m,couple->x,couple->y);
 }
 
 Couple_chaine* lire_genome(char* file_name){
-/*Fonction permettant de faire la lecture d'un fichier contenant un genome*/    
-    FILE* genome = fopen(file_name,"r");
+    FILE* fichier = fopen(file_name,"r");
 
-    if(genome==NULL){
-        printf("Erreur de lecture du fichier\n");
+    if(fichier == NULL){
+        printf("Erreur de lecture\n");
         return NULL;
     }
 
-    char* x;                    //Chaîne qui va contenir la valeur de x
-    char* y;                    //Chaîne qui va contenir la valeur de y
-    int n;                      //Taille de x
-    int m;                      //Taille de y
-    char buffer[256];           //Buffer nous permettant de récupérer chaque ligne
+    int n;
+    int m; 
 
-    fgets(buffer,256,genome);
-    printf("Buffer : %s",buffer);
+    char buffer[256];
+
+    fgets(buffer,256,fichier);
     if(sscanf(buffer,"%d",&n)!=1){
-        printf("Erreur de lecture de la taille de x\n");
+        printf("Erreur de lecture de n\n");
         return NULL;
     }
 
-    fgets(buffer,256,genome);
-    printf("Buffer : %s",buffer);
+    fgets(buffer,256,fichier);
     if(sscanf(buffer,"%d",&m)!=1){
-        printf("Erreur de lecture de la taille de y\n");
+        printf("Erreur de lecture de m\n");
         return NULL;
     }
 
-    x = (char*) malloc(n*sizeof(char));
-    y = (char*) malloc(m*sizeof(char));
+    char buffer_x[2*n +1];
+    fgets(buffer_x,2*n,fichier);
 
-    fgets(buffer,256,genome);
-    printf("Buffer : %s",buffer);
-    strcpy(buffer,x);
-    
+    /*Boucle servant à aller à la ligne suivante*/
+    char ligne_suiv = fgetc(fichier);
+    while(ligne_suiv!='\n'){
+        ligne_suiv = fgetc(fichier);
+    }
 
-    fgets(buffer,256,genome);
-    printf("Buffer : %s",buffer);
-    strcpy(buffer,y);
     
+    char buffer_y[2*m + 1];
+    fgets(buffer_y,2*m,fichier);
+    char* x = (char*) malloc( (n+1) * sizeof(char));
+    char* y = (char*) malloc ( (m+1) * sizeof(char));
+
+    int i;
+    int j = 0;
+    for(i = 0 ; i < 2*n ; i = i + 2){
+        x[j] = buffer_x[i];
+        j++;
+    }
+
+    j = 0;
+    for(i = 0 ; i < 2*m ; i = i +2){
+        y[j] = buffer_y[i];
+        j++;
+    }
+
+    x[n] = '\0';
+    y[m] = '\0';
 
     Couple_chaine* res = creer_couple_chaine(x,y,n,m);
 
+    fclose(fichier);
     return res;
 }
