@@ -88,19 +88,19 @@ Alignement* sol_1(char* x, char* y, int n, int m, int* D[][]){
     /*Parcourt dans le tableau, puisqu'on avance soit vers la gauche, soit le haut, soit les deux, on passe bien au maximum n + m fois
     dans la boucle, pas de problème sur le curseur, en cas d'erreur, on quitte la fonction en retournant une erreur.*/
     while i > 0 || j > 0 {
-        if j > 0 and D(i, j) = D(i, j-1) + C_INS{
+        if ((j > 0) && (D[i][j] == D[i] [j-1] + C_INS)){
             res->x[res->curseur] = '-';
             res->y[res->curseur] = y[j];
             res->curseur --;                //On recule dans la chaîne de caractères car on la remplit par la fin
             j = j -1;
         }
-        else if i > 0 and D(i, j) = D(i -1, j) + C_DEL {
+        else if ((i > 0) && (D[i] [j] == D[i -1] [j] + C_DEL)) {
             res->x[res->curseur] = x[i];
             res->y[res->curseur] = '-';
             res->curseur --;                //On avance dans la chaîne de caractères
             i = i -1;
         }
-        else if i > 0 et j > 0 et D(i, j) = D(i -1, j -1) + cout_substitution (x[i] , y[j]){
+        else if ((i > 0) && (j > 0) (&& D[i] [j] == D[i -1][j -1] + cout_substitution (x[i] , y[j]))){
             res->x[res->curseur] = x[i];
             res->y[res->curseur] = y[j];
             res->curseur --;
