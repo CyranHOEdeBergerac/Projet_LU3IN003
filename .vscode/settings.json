@@ -1,6 +1,7 @@
 {
     "C_Cpp.errorSquiggles": "Disabled",
     "files.associations": {
-        "fonctions.h": "c"
+        "fonctions.h": "c",
+        "methode_naive.h": "c"
     }
 }

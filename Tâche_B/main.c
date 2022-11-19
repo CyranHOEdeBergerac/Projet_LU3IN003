@@ -8,6 +8,8 @@ int main(){
     Couple_chaine* couple = lire_genome("../Instances_genome/Inst_0000010_7.adn");
 
     Alignement* res = prog_dyn(couple);
-    afficher_alignement(res);
+    //afficher_alignement(res);
+
+    supprimer_alignement(res);
 
 }

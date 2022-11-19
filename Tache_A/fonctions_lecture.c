@@ -1,6 +1,5 @@
 #include"fonctions_lecture.h"
 
-/*IL Y A UN PROBLÈME POUR RECUPÉRER Y*/
 
 Couple_chaine* creer_couple_chaine(char*x, char* y, int n, int m){
     Couple_chaine* res = (Couple_chaine*) malloc ( sizeof(Couple_chaine) );
