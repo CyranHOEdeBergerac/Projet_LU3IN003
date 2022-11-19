@@ -1,3 +1,5 @@
+#ifndef FONCTIONS_LECTURE_H
+#define FONCTIONS_LECTURE_H
 #include<string.h>
 #include<stdio.h>
 #include<stdlib.h>
@@ -21,3 +23,5 @@ void afficher_couple_chaine(Couple_chaine* couple);
 
 /*Fonction permettant de lire l'échantillon de génome contenu dans le fichier file_name*/
 Couple_chaine* lire_genome(char* file_name);
+
+#endif

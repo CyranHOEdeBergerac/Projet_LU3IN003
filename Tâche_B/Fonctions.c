@@ -1,26 +1,9 @@
 #include "Fonctions.h"
 
 
-
-
-int cout_substitution(char a, char b){
-    /*Fonction retournant le coût de substitution de (a,b)*/
-    if (a==b){
-        return 0;
-    }
-
-    if(lettres_concordantes(a,b)){
-        return C_SUB_CONCORDANT;
-    }
-    return C_SUB_NON_CONCORDANT;
-}
-
-
-
-
 int min3(int a, int b, int c){
-    if a < b{
-        if a < c {
+    if (a < b){
+        if (a < c) {
             return a;
         }
         else{
@@ -28,7 +11,7 @@ int min3(int a, int b, int c){
         }
     }
     else{ 
-        if b < c{
+        if(b < c){
             return b;
         }
         else{
@@ -50,79 +33,93 @@ Alignement* creer_alignement(int n, int m){
     return res;
 }
 
-#if 0
+
 void afficher_alignement(Alignement* algn){
     int i;
-    for(int i = algn->curseur; i < algn->taille; i ++){
+    for(int i = algn->curseur +1; i < algn->taille; i ++){
         printf("%c",algn->x[i]);
     }
     printf("\n");
-    for(int i = algn->curseur ; i <algn->taille; i++){
+    for(int i = algn->curseur +1; i <algn->taille; i++){
         printf("%c",algn->y[i]);
     }
     printf("\nDistance d'édition = %d",algn->distance_edition);
 }
-#endif
 
 void supprimer_alignement(Alignement* algn){
     free(algn->x);
+    printf("Là ça va\n");
     free(algn->y);
     free(algn);
 }
 
-int dist_1(char * x, char* y, int n, int m, int *** Distances){
+int dist_1(char * x, char* y, int n, int m, int ** Distances){
 /*Fonction qui calcule la distance d'édition entre x et y de taille n et m en utilisant un tableau de taille n x m également passé en paramètres*/
     int i ;
     int j ;
-    for( i = 0 ; i < n ; i ++){
-        for (j = 0 ; j < m ; j++){
-            if i = 0 {
-                if j = 0 {
-                    *Distances[i][j] = 0;
-                else
-                    *Distances[i][j] = j * C_INS;
+    int cas_ins;
+    int cas_del;
+    int cas_sub;
+    printf("premier caractère de x : %c, premier caractère de y : %c\n",x[0],y[0]);
+    Distances[0][0] = 0;
+    for( i = 0 ; i <= n ; i ++){
+        for (j = 0 ; j <= m ; j++){
+            if (i == 0) {
+                if (j == 0) {
+                    Distances[i][j] = 0;
+                }
+                else{
+                    Distances[i][j] = j * C_INS;
                 }
             }
             else{
-                if j = 0 then{
-                    *Distances[i][j] = i * C_DEL;
+                if (j == 0) {
+                    Distances[i][j] = i * C_DEL;
                 }
                 else{
-                    *Distances[i][j] = *Distances[i-1, j-1] + min3(C_INS , C_DEL , cout_substitution(x[i] , y[j] ));
+                    cas_ins = Distances[i][j-1] + C_INS;
+                    cas_del = Distances[i-1][j] + C_DEL;
+                    cas_sub = Distances[i-1][j-1] + cout_substitution(x[i-1] , y[j-1]);     //Attention : les chaînes de caractère commencent à l'indice 0 !
+
+
+                    Distances[i][j] = min3(cas_ins , cas_del , cas_sub);
                 }
             }
+            printf("%d\t",Distances[i][j]);
         }
+        printf("\t fin ligne %d\n",i);
     }
+    printf("Là on est sortis de la grosse boucle avec %d\n",Distances[n][m]);
     return Distances[n][m];
 }
 
 
-Alignement* sol_1(char* x, char* y, int n, int m, int*** D){
+Alignement* sol_1(char* x, char* y, int n, int m, int** D){
     int i = n; 
     int j = m;
 
     /*CREATION DE L'ALIGNEMENT*/
-    Alignement* res = creer_alignement(int n, int m);
-    res->distance_edition = *D[n][m];
+    Alignement* res = creer_alignement(n, m);
+    res->distance_edition = D[n][m];
 
     /*Parcourt dans le tableau, puisqu'on avance soit vers la gauche, soit le haut, soit les deux, on passe bien au maximum n + m fois
     dans la boucle, pas de problème sur le curseur, en cas d'erreur, on quitte la fonction en retournant une erreur.*/
-    while i > 0 || j > 0 {
-        if ((j > 0) && (D[i][j] == *D[i] [j-1] + C_INS)){
+    while ((i > 0) || (j > 0)) {
+        if ((j > 0) && (D[i][j] == D[i] [j-1] + C_INS)){
             res->x[res->curseur] = '-';
             res->y[res->curseur] = y[j];
             res->curseur --;                //On recule dans la chaîne de caractères car on la remplit par la fin
             j = j -1;
         }
-        else if ((i > 0) && (D[i] [j] == *D[i -1] [j] + C_DEL)) {
+        else if ((i > 0) && (D[i] [j] == D[i -1] [j] + C_DEL)) {
             res->x[res->curseur] = x[i];
             res->y[res->curseur] = '-';
             res->curseur --;                //On avance dans la chaîne de caractères
             i = i -1;
         }
-        else if ((i > 0) && (j > 0) (&& *D[i] [j] == *D[i -1][j -1] + cout_substitution (x[i] , y[j]))){
-            res->x[res->curseur] = x[i];
-            res->y[res->curseur] = y[j];
+        else if ((i > 0) && (j > 0) && (D[i] [j] == D[i -1][j -1] + cout_substitution(x[i-1] , y[j-1]))){           //Attention : on regarde bien dans une chaîne, l'indice i dans le tableau est l'indice i - 1 dans la chaîne en C !
+            res->x[res->curseur] = x[i-1];
+            res->y[res->curseur] = y[j-1];
             res->curseur --;
             i = i -1;
             j = j -1;
@@ -140,11 +137,22 @@ Alignement* sol_1(char* x, char* y, int n, int m, int*** D){
 
 Alignement* prog_dyn(Couple_chaine* couple){
 
-    int Dist[couple->n][couple->m];         //Tableau pour la programmation dynamique
+    int** Dist = (int **) malloc((couple->n +1)* sizeof(int*));
+    for(int i = 0; i <= couple->n ; i ++){
+        Dist[i] = (int*) malloc((couple->m +1)* sizeof(int));
+    }
 
-    dist_1(couple->x,Couple_chaine->y,couple->n,couple->m,&Dist);
+    afficher_couple_chaine(couple);
 
-    Alignement* res = sol_1(couple->x,couple->y,couple->n, couple->m,&Dist);
+    
+    dist_1(couple->x,couple->y,couple->n,couple->m,Dist);
+
+    Alignement* res = sol_1(couple->x,couple->y,couple->n, couple->m,Dist);
+
+
+    for(int i = 0; i < couple->n ; i ++){
+        free(Dist[i]);
+    }
 
     return res;
 }

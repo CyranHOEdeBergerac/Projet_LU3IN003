@@ -1,3 +1,6 @@
+#ifndef METHODE_NAIVE_H
+#define METHODE_NAIVE_H
+
 #include<stdio.h>
 #include<string.h>
 
@@ -20,3 +23,5 @@ int dist_naif(char* x, char* y);
  cet appel à partir de x et y deux mots, i un indice dans [0:|x|], j un indice dans[0;|y|], 
  c le coût de l'alignement de (x[0;i],y[0;j])*/
 int dist_naif_rec(char*x,char*y,int i, int j, int c, int dist);
+
+#endif
