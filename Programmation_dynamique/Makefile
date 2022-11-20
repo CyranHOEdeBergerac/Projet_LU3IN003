@@ -10,10 +10,10 @@ main_Taches_B_C : main_Taches_B_C.o Tache_B.o Tache_C.o outils.o structures.o fo
 
 
  
- Tache_B.o : Tache_B.c Tache_B.h ../Fonctions_generales/outils.h ../Fonctions_generales/structures.h
+ Tache_B.o : Tache_B.c Tache_B.h
 	gcc -c Tache_B.c
  
- Tache_C.o : Tache_C.c Tache_C.h ../Fonctions_generales/outils.h
+ Tache_C.o : Tache_C.c Tache_C.h 
 	gcc -c Tache_C.c
  
  
