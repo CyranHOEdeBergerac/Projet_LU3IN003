@@ -1,13 +1,8 @@
-#include<stdio.h>
-#include<string.h>
-#include<time.h>
-#include<dirent.h>
+#include"../Fonctions_generales/outils.h"
+#include"../Fonctions_generales/structures.h"
+#include"../Fonctions_generales/fonctions_lecture_ecriture.h"
 
-#include"fonctions_lecture.h"
-#include"methode_naive.h"
-
-
-
+#include"Tache_A.h"
 
 int main(){ 
 

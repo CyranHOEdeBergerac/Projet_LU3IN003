@@ -1,32 +1,5 @@
-#include"fonctions_lecture.h"
+#include"fonctions_lecture_ecriture.h"
 
-
-Couple_chaine* creer_couple_chaine(char*x, char* y, int n, int m){
-    Couple_chaine* res = (Couple_chaine*) malloc ( sizeof(Couple_chaine) );
-
-    if(res ==NULL){
-        printf("Erreur d'allocation\n");
-        return NULL;
-    }
-
-    res->x = x;
-    res->y = y;
-    res->n = n;
-    res->m = m;
-
-    return res;
-}
-
-void supprimer_couple_chaine(Couple_chaine* couple){
-    free(couple->x);
-    free(couple->y);
-    free(couple);
-
-}
-
-void afficher_couple_chaine(Couple_chaine* couple){
-    printf("n = %d, m = %d\n x = %s.\n y = %s.\n",couple->n,couple->m,couple->x,couple->y);
-}
 
 Couple_chaine* lire_genome(char* file_name){
     FILE* fichier = fopen(file_name,"r");

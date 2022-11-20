@@ -1,57 +1,6 @@
 #include "Fonctions.h"
 
 
-int min3(int a, int b, int c){
-    if (a < b){
-        if (a < c) {
-            return a;
-        }
-        else{
-            return c;
-        }
-    }
-    else{ 
-        if(b < c){
-            return b;
-        }
-        else{
-            return c;
-        }
-    }
-}
-
-Alignement* creer_alignement(int n, int m){
-    Alignement* res = (Alignement*) malloc (sizeof(Alignement*));
-    char * x = (char*) malloc( (n+m) * sizeof(char));
-    char *  y = (char*) malloc ( (n+m) * sizeof(char));
-
-    res->curseur = n + m - 1;
-    res->x = x;
-    res->y = y;
-
-    res->taille = n + m;
-    return res;
-}
-
-
-void afficher_alignement(Alignement* algn){
-    int i;
-    for(int i = algn->curseur +1; i < algn->taille; i ++){
-        printf("%c",algn->x[i]);
-    }
-    printf("\n");
-    for(int i = algn->curseur +1; i <algn->taille; i++){
-        printf("%c",algn->y[i]);
-    }
-    printf("\nDistance d'édition = %d\n",algn->distance_edition);
-}
-
-void supprimer_alignement(Alignement* algn){
-    free(algn->x);
-    printf("Là ça va\n");
-    free(algn->y);
-    free(algn);
-}
 
 int dist_1(char * x, char* y, int n, int m, int ** Distances){
 /*Fonction qui calcule la distance d'édition entre x et y de taille n et m en utilisant un tableau de taille n x m également passé en paramètres*/
