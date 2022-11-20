@@ -1,7 +1,9 @@
-#include"Fonctions.h"
-#include"../Tache_A/fonctions_lecture.h"
-#include"Dist_2.h"
-/*FAIRE LE MAKEFILE*/
+#include"../Fonctions_generales/outils.h"
+#include"../Fonctions_generales/structures.h"
+#include"../Fonctions_generales/fonctions_lecture_ecriture.h"
+
+#include"Tache_B.h"
+#include"Tache_C.h"
 
 int main(){
     /*Test de notre solution sur un alignement*/

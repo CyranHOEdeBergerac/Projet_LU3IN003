@@ -1,26 +1,36 @@
-all :  main
-
-main : main.o Fonctions.o fonctions_lecture.o methode_naive.o Dist_2.o
-	gcc -o main main.o Fonctions.o ../Tache_A/fonctions_lecture.o methode_naive.o Dist_2.o
+all :  main_Taches_B_C
 
 
+main_Taches_B_C : main_Taches_B_C.o Tache_B.o Tache_C.o outils.o structures.o fonctions_lecture_ecriture.o
+	gcc -o main_Taches_B_C main_Taches_B_C.o Tache_B.o Tache_C.o outils.o structures.o fonctions_lecture_ecriture.o
 
-Fonctions.o : Fonctions.c Fonctions.h ../Tache_A/fonctions_lecture.h  ../Tache_A/methode_naive.h
-	gcc -c Fonctions.c
+
+ main_Taches_B_C.o : main_Taches_B_C.c Tache_B.h Tache_C.h ../Fonctions_generales/outils.h ../Fonctions_generales/structures.h ../Fonctions_generales/fonctions_lecture_ecriture.h
+	gcc -c main_Taches_B_C.c
 
 
-Dist_2.o : Dist_2.c Dist_2.h Fonctions.h ../Tache_A/methode_naive.h
-	gcc -c Dist_2.c
+ 
+ Tache_B.o : Tache_B.c Tache_B.h ../Fonctions_generales/outils.h ../Fonctions_generales/structures.h
+	gcc -c Tache_B.c
+ 
+ Tache_C.o : Tache_C.c Tache_C.h ../Fonctions_generales/outils.h
+	gcc -c Tache_C.c
+ 
+ 
+#=====Autres répertoires=====
 
-main.o : main.c Fonctions.h ../Tache_A/fonctions_lecture.h ../Tache_A/methode_naive.h
-	gcc -c main.c
+fonctions_lecture_ecriture.o : ../Fonctions_generales/fonctions_lecture_ecriture.c ../Fonctions_generales/fonctions_lecture_ecriture.h
+	gcc -c ../Fonctions_generales/fonctions_lecture_ecriture.c 
 
-fonctions_lecture.o : ../Tache_A/fonctions_lecture.c ../Tache_A/fonctions_lecture.h
-	gcc -c ../Tache_A/fonctions_lecture.c 
+outils.o : ../Fonctions_generales/outils.c ../Fonctions_generales/outils.h
+	gcc -c ../Fonctions_generales/outils.c
 
-methode_naive.o : ../Tache_A/methode_naive.c ../Tache_A/methode_naive.h ../Tache_A/fonctions_lecture.h
-	gcc -c ../Tache_A/methode_naive.c
+structures.o : ../Fonctions_generales/structures.c ../Fonctions_generales/structures.h
+	gcc -c ../Fonctions_generales/structures.c
+
+#============================
+
 
 
 clean : 
-	rm -f *.o main 
+	rm -f *.o main_Taches_B_C 
