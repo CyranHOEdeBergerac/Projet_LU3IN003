@@ -1,17 +1,24 @@
-all : Experimentation_approche_naive 
+all : Experimentation_approche_naive Experimentation_Programmation_dynamique
 
 
 Experimentation_approche_naive : Experimentation_approche_naive.o Tache_A.o outils.o structures.o fonctions_lecture_ecriture.o Manipulation_fichiers_genomes.o
 	gcc -o Experimentation_approche_naive Experimentation_approche_naive.o Tache_A.o outils.o structures.o fonctions_lecture_ecriture.o Manipulation_fichiers_genomes.o
 
+Experimentation_Programmation_dynamique : Experimentation_Programmation_dynamique.o Tache_B.o outils.o structures.o fonctions_lecture_ecriture.o Manipulation_fichiers_genomes.o
+	gcc -o Experimentation_Programmation_dynamique Experimentation_Programmation_dynamique.o Tache_B.o outils.o structures.o fonctions_lecture_ecriture.o Manipulation_fichiers_genomes.o
 
 Experimentation_approche_naive.o : Experimentation_approche_naive.c ../Approche_naive/Tache_A.h ../Fonctions_generales/fonctions_lecture_ecriture.h ../Fonctions_generales/outils.h ../Fonctions_generales/structures.h ../Outils_pour_experimentation/Manipulation_fichiers_genomes.h
 	gcc -c Experimentation_approche_naive.c
 
+Experimentation_Programmation_dynamique.o :  Experimentation_Programmation_dynamique.c ../Programmation_dynamique/Tache_B.h ../Fonctions_generales/fonctions_lecture_ecriture.h ../Fonctions_generales/outils.h ../Fonctions_generales/structures.h ../Outils_pour_experimentation/Manipulation_fichiers_genomes.h
+	gcc -c Experimentation_Programmation_dynamique.c
 
 #=====Autres répertoires=====
 Tache_A.o : ../Approche_naive/Tache_A.c ../Approche_naive/Tache_A.h 
 	gcc -c ../Approche_naive/Tache_A.c
+
+Tache_B.o : ../Programmation_dynamique/Tache_B.c ../Programmation_dynamique/Tache_B.h
+	gcc -c ../Programmation_dynamique/Tache_B.c 
 
 fonctions_lecture_ecriture.o : ../Fonctions_generales/fonctions_lecture_ecriture.c ../Fonctions_generales/fonctions_lecture_ecriture.h
 	gcc -c ../Fonctions_generales/fonctions_lecture_ecriture.c 
