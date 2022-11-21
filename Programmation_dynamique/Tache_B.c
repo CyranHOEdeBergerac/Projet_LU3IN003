@@ -32,9 +32,7 @@ int dist_1(char * x, char* y, int n, int m, int ** Distances){
                     Distances[i][j] = min3(cas_ins , cas_del , cas_sub);
                 }
             }
-            printf("%d\t",Distances[i][j]);
         }
-        printf("\n");
     }
     return Distances[n][m];
 }

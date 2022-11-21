@@ -7,7 +7,7 @@
 
 int main(){
     /*Test de notre solution sur un alignement*/
-    Couple_chaine* couple = lire_genome("../Instances_genome/Inst_0000010_7.adn");
+    Couple_chaine* couple = lire_genome("../Instances_genome/Inst_0000012_56.adn");
 
     afficher_couple_chaine(couple);
 

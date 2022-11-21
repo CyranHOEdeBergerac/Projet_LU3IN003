@@ -34,12 +34,10 @@ int Dist_2(char*x,char*y,int n, int m, int** Distances){
             }
 
            
-            printf("%d\t",Distances[1][j]);
         }
         for(j = 0 ; j <= m ; j++){
             Distances[0][j] = Distances[1][j];
         }
-        printf("\n");
     }
     return Distances[1][m];
 
