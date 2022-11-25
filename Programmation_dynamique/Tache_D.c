@@ -16,13 +16,13 @@ char* mot_gaps(int k){
 
 Alignement* align_lettre_mot(char x, char* y, int m){
     Alignement* res = (Alignement*) malloc(sizeof(Alignement));
-    int place_x;                            //indice où placer x dans l'alignement
+    int place_x = 0;                            //indice où placer x dans l'alignement
     int j;                                  //Parcourt dans y
     int cout_sub_courant;
     /*On cherche la place où mettre x dans l'alignement*/
     for(j = 0; j < m ; j++){
         cout_sub_courant = cout_substitution(x,y[j]);
-        if ((cout_sub_courant) == min3(cout_sub_courant,2*C_DEL,2*C_INS)){
+        if ((cout_sub_courant) == min3(cout_sub_courant,C_DEL,C_INS)){
             place_x = j;
         }
     }
@@ -99,7 +99,6 @@ Alignement * SOL_2(char * x, char* y, int n, int m, int** Dist, int** I){
 
     else{
         int j = coupure(x,y,n,m,Dist,I);
-        printf("Coupure = %d\n",j);
         int i = n/2;
 
 
@@ -129,7 +128,7 @@ int coupure(char * x, char* y, int n, int m, int** Dist, int ** I){
             }
 
             else{
-                Dist_2(x,y,n,m,Dist);
+                Dist_2(x,y,i,m,Dist);
                 chemin_pris = min3(Dist[0][j],Dist[0][j-1],Dist[1][j-1]);
                 if(chemin_pris == Dist[0][j]){
                     I[1][j] = I[0][j];
@@ -145,9 +144,7 @@ int coupure(char * x, char* y, int n, int m, int** Dist, int ** I){
                     printf("Erreur dans la coupure !");
                 }
             }
-            printf("%d\t",I[1][j]);
         }
-        printf("\n");
         for(j = 0 ; j <= m ; j++){
             I[0][j] = I[1][j];
         }

@@ -9,7 +9,6 @@ int Dist_2(char*x,char*y,int n, int m, int** Distances){
     int cas_ins;
     int cas_del;
     int cas_sub;
-#
     for( i = 0 ; i <= n ; i ++){
         for (j = 0 ; j <= m ; j++){
             if (i == 0) {
@@ -32,7 +31,6 @@ int Dist_2(char*x,char*y,int n, int m, int** Distances){
                     Distances[1][j] = min3(cas_ins , cas_del , cas_sub);
                 }
             }
-
            
         }
         for(j = 0 ; j <= m ; j++){

@@ -30,7 +30,7 @@ Couple_chaine* lire_genome(char* file_name){
     fgets(buffer_x,2*n,fichier);
 
     /*Boucle servant à aller à la ligne suivante*/
-    char ligne_suiv = fgetc(fichier);
+    int ligne_suiv = fgetc(fichier);
     while(ligne_suiv!='\n'){
         ligne_suiv = fgetc(fichier);
     }
