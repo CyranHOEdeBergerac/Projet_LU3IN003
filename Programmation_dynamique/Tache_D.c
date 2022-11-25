@@ -64,37 +64,35 @@ Alignement* align_lettre_mot(char x, char* y, int m){
     return res;
 }
 
+
 Alignement * SOL_2(char * x, char* y, int n, int m, int** Dist, int** I){
 
     Alignement* algn_res = (Alignement*) malloc(sizeof(Alignement));
 
-    if(n == 0){
-        algn_res->x = mot_gaps(m);
-        algn_res->y = strdup(y);
-        algn_res->taille = m;
-    }
-    else if (m == 0){
+    if (m == 0){
         algn_res->x = strdup(x);
         algn_res->y = mot_gaps(m);
         algn_res->taille = m;
     }
-    else if( n == 1 ){
-        algn_res = align_lettre_mot(x[0],y,m);               
-    }
-    else if (m == 1){
-        algn_res = align_lettre_mot(x[0],y,m);
+    else if (( n == 1 ) && (m ==1)){
+        if ((x[0]==y[0]) || lettres_concordantes(x[0],y[0])){
+            algn_res->x = (char*) malloc(2*sizeof(char));
+            algn_res->x[0] = x[0];
+            algn_res->x[1] = '\0';
+            algn_res->y = (char*) malloc(2*sizeof(char));
+            algn_res->y[0] = y[0];
+            algn_res->y[1] = '\0';
+            algn_res->taille = 2;
+        }
+        else{
+            algn_res->taille = 3;
+            algn_res->x = (char*) malloc((algn_res->taille)*sizeof(char));
+            algn_res->y = (char*) malloc((algn_res->taille)*sizeof(char));
 
-        /*on inverse les deux chaînes pour pouvoir utiliser align lettre mot*/
-        char * tmp = algn_res->x;
-        algn_res->x = algn_res->y;
-        algn_res->y = tmp;
+            sprintf(algn_res->x,"-%c",x[0]);
+            sprintf(algn_res->x,"%c-",y[0]);
 
-        algn_res = align_lettre_mot(x[0],y,m);
-
-        /*On réinverse le résultat*/
-        tmp = algn_res->x;
-        algn_res->x = algn_res->y;
-        algn_res->y = tmp;
+        }
     }
 
     else{
@@ -112,7 +110,6 @@ Alignement * SOL_2(char * x, char* y, int n, int m, int** Dist, int** I){
     return algn_res;
 }
 
-
 int coupure(char * x, char* y, int n, int m, int** Dist, int ** I){
     int i_etoile = n/2;
     int i;
@@ -129,19 +126,25 @@ int coupure(char * x, char* y, int n, int m, int** Dist, int ** I){
 
             else{
                 Dist_2(x,y,i,m,Dist);
-                chemin_pris = min3(Dist[0][j],Dist[0][j-1],Dist[1][j-1]);
-                if(chemin_pris == Dist[0][j]){
-                    I[1][j] = I[0][j];
-                }
-                else if (chemin_pris == Dist[0][j-1]){
-                    I[1][j] = I[0][j-1];
-                }
-                else if (chemin_pris == Dist[1][j-1]){
 
-                    I[1][j] = I[1][j-1];
+                if( j== 0){
+                    I[1][j] = 2 + I[0][j];
                 }
                 else{
-                    printf("Erreur dans la coupure !");
+                    chemin_pris = min3(Dist[0][j],Dist[0][j-1],Dist[1][j-1]);
+                    if(chemin_pris == Dist[0][j]){
+                        I[1][j] = I[0][j];
+                    }
+                    else if (chemin_pris == Dist[0][j-1]){
+                        I[1][j] = I[0][j-1];
+                    }
+                    else if (chemin_pris == Dist[1][j-1]){
+
+                        I[1][j] = I[1][j-1];
+                    }
+                    else{
+                        printf("Erreur dans la coupure !");
+                    }
                 }
             }
         }
