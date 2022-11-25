@@ -6,19 +6,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-/*Structure notant les informations utiles pour un fichier*/
-
-typedef struct _Nom_taille_x{
-    char* nom;
-    int taille_x;
-}Nom_taille_x;
-
-/*Structure nous permettant de manipuler un tableau de fichiers. La structure a son intérêt car le tableau n'est pas toujours de taille maximum, selon
-le nombre de fichiers dans le dossier.*/
-typedef struct _Tableau_fichiers{
-    Nom_taille_x** tableau;
-    int nombre_fichiers_lus;
-}Tableau_fichiers;
+#include"../Fonctions_generales/structures.h"
 
 /*Fonction permettant de lire la taille de x dans le fichier nom_fichier*/
 int lire_taille_x(const char* nom_fichier);
@@ -30,6 +18,9 @@ Tableau_fichiers* lire_noms_fichiers(const char* nom_dossier,int nb_max);
 
 /*Fonction qui permet de comparer deux fichiers entre eux selon la taille de x*/
 int Comparateur_fichier(const void* Fichier_1,const void* Fichier_2);
+
+/*Fonction permettant de lire les noms de fichiers du dossier entré en paramètre s'ils ont une taille de x supérieure ou égale à taille_x_min*/
+Tableau_fichiers * lire_noms_fichiers_taille_x(const char* nom_dossier, int nb_max, int taille_x_min);
 
 
 
