@@ -3,7 +3,6 @@
 
 
 int dist_1(char * x, char* y, int n, int m, int ** Distances){
-/*Fonction qui calcule la distance d'édition entre x et y de taille n et m en utilisant un tableau de taille n+1 x m+1 également passé en paramètres*/
     int i ;
     int j ;
     int cas_ins;
