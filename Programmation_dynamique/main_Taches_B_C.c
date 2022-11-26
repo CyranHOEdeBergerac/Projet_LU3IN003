@@ -22,6 +22,5 @@ int main(){
 
     afficher_alignement(res);
 
-    //supprimer_alignement(res);        //GESTION DE LA MÉMOIRE À REVOIR
 
 }

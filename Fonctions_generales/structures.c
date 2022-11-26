@@ -60,6 +60,7 @@ void supprimer_alignement(Alignement* algn){
 }
 
 Alignement* concatener_alignements(Alignement*algn_1, Alignement* algn_2){
+
     algn_1->taille = algn_1->taille + algn_2->taille;
 
     algn_1->x = (char *) realloc(algn_1->x,algn_1->taille +1);

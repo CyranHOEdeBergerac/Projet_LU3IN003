@@ -20,6 +20,7 @@ int main(){
     char nom_a_lire[256];
     int choix;
     int i = 0;
+    Couple_chaine* inst_10_8;
 
     FILE* fichier_ecriture;
 
@@ -27,7 +28,7 @@ int main(){
 
 
     do{
-        printf("\n=====Que faire ?=====\n0: sortie\n1:chercher la taille pour que le temps de calcul dépasse la minute\n2: Test de la méthode\n");
+        printf("\n=====Que faire ?=====\n0: sortie\n1:chercher la taille pour que le temps de calcul dépasse la minute\n2: Test de la méthode sur Inst_0000012_32\n");
         scanf("%d",&choix);
 
 
@@ -53,6 +54,9 @@ int main(){
             fclose(fichier_ecriture);
             break;
         case 2 : 
+            inst_10_8 = lire_genome("../Instances_genome/Inst_0000012_32.adn");
+            dist = dist_naif(inst_10_8->x,inst_10_8->y);
+            supprimer_couple_chaine(inst_10_8);
             break;
 
         case 0 : 

@@ -1,17 +1,22 @@
 #include "Manipulation_fichiers_genomes.h"
 
-/*PROBLÈME AVEC L'OUVERTURE DU FICHIER (ET DU NOM C'EST DES ERREURS DE LECTURE)*/
+
+
 int lire_taille_x(const char* nom_fichier){
     char nom_avec_repertoire[256];
     sprintf(nom_avec_repertoire,"../Instances_genome/%s",nom_fichier);
     FILE* fichier = fopen(nom_avec_repertoire,"r");
+
     if(fichier==NULL){
         printf("Erreur de lecture du fichier\n");
         return 0;
     }
+
     int n;
     char buffer[256];
+
     fgets(buffer,256,fichier);
+    
     if(sscanf(buffer,"%d",&n)!=1){
         printf("Erreur de lecture de n\n");
         return 0;

@@ -41,4 +41,4 @@ structures.o : ../Fonctions_generales/structures.c ../Fonctions_generales/struct
 
 
 clean : 
-	rm -f *.o main_Taches_B_C 
+	rm -f *.o main_Taches_B_C test_tache_D

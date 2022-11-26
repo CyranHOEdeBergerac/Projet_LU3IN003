@@ -2,6 +2,8 @@
     "C_Cpp.errorSquiggles": "Disabled",
     "files.associations": {
         "fonctions.h": "c",
-        "methode_naive.h": "c"
+        "methode_naive.h": "c",
+        "fonctions_lecture_ecriture.h": "c",
+        "tache_c.h": "c"
     }
 }

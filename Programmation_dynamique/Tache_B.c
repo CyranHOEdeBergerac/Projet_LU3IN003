@@ -3,7 +3,7 @@
 
 
 int dist_1(char * x, char* y, int n, int m, int ** Distances){
-/*Fonction qui calcule la distance d'édition entre x et y de taille n et m en utilisant un tableau de taille n x m également passé en paramètres*/
+/*Fonction qui calcule la distance d'édition entre x et y de taille n et m en utilisant un tableau de taille n+1 x m+1 également passé en paramètres*/
     int i ;
     int j ;
     int cas_ins;
@@ -91,7 +91,7 @@ Alignement* prog_dyn(Couple_chaine* couple){
     Alignement* res = sol_1(couple->x,couple->y,couple->n, couple->m,Dist);
 
 
-    for(int i = 0; i < couple->n ; i ++){
+    for(int i = 0; i < couple->n+1 ; i ++){
         free(Dist[i]);
     }
     free(Dist);

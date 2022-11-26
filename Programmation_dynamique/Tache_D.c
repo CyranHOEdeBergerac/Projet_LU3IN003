@@ -16,18 +16,23 @@ char* mot_gaps(int k){
 
 Alignement* align_lettre_mot(char x, char* y, int m){
     Alignement* res = (Alignement*) malloc(sizeof(Alignement));
-    int place_x = 0;                            //indice où placer x dans l'alignement
+    int place_x = -1;                            //indice où placer x dans l'alignement
     int j;                                  //Parcourt dans y
     int cout_sub_courant;
     /*On cherche la place où mettre x dans l'alignement*/
     for(j = 0; j < m ; j++){
-        cout_sub_courant = cout_substitution(x,y[j]);
-        if ((cout_sub_courant) == min3(cout_sub_courant,C_DEL,C_INS)){
+
+        if (lettres_concordantes(x,y[j]) || (x==y[j])){                 
+        //Utiliser le cas général en regardant les différents coûts ne marchait pas alors nous allons nous restreindre à 
+        //l'hypothèse selon laquelle une substitution concordante est plus avantageuse qu'une insertion et une suppression
+
             place_x = j;
         }
+
+        
     }
 
-    if(place_x == 0){
+    if(place_x == -1){
         res->taille = m +1;
         res->x = (char*) malloc( (res->taille +1) * sizeof(char));
         res->y =  (char*) malloc( (res->taille +1) *sizeof(char));
@@ -35,7 +40,7 @@ Alignement* align_lettre_mot(char x, char* y, int m){
         res->x[0] = x;
         res->y[0] = '-';
 
-        for(j = 0 ; j <= res->taille ; j++){
+        for(j = 1 ; j <= res->taille ; j++){
             res->x[j] = '-';                     //Utiliser mot_gaps n'est pas pratique par rapport au langage utilisé
             res->y[j] = y[j-1];
         }
@@ -58,6 +63,7 @@ Alignement* align_lettre_mot(char x, char* y, int m){
             }
         }
     }
+    
     res->x[res->taille] = '\0';
     res->y[res->taille] = '\0';
     
@@ -67,46 +73,60 @@ Alignement* align_lettre_mot(char x, char* y, int m){
 
 Alignement * SOL_2(char * x, char* y, int n, int m, int** Dist, int** I){
 
+
     Alignement* algn_res = (Alignement*) malloc(sizeof(Alignement));
 
-    if (m == 0){
+    if(n == 0){
+        algn_res->x = mot_gaps(m);
+        algn_res->y = strdup(y);
+    
+    }
+    else if (m == 0){
         algn_res->x = strdup(x);
-        algn_res->y = mot_gaps(m);
-        algn_res->taille = m;
+        algn_res->y = mot_gaps(n);
+        
     }
-    else if (( n == 1 ) && (m ==1)){
-        if ((x[0]==y[0]) || lettres_concordantes(x[0],y[0])){
-            algn_res->x = (char*) malloc(2*sizeof(char));
-            algn_res->x[0] = x[0];
-            algn_res->x[1] = '\0';
-            algn_res->y = (char*) malloc(2*sizeof(char));
-            algn_res->y[0] = y[0];
-            algn_res->y[1] = '\0';
-            algn_res->taille = 2;
-        }
-        else{
-            algn_res->taille = 3;
-            algn_res->x = (char*) malloc((algn_res->taille)*sizeof(char));
-            algn_res->y = (char*) malloc((algn_res->taille)*sizeof(char));
-
-            sprintf(algn_res->x,"-%c",x[0]);
-            sprintf(algn_res->x,"%c-",y[0]);
-
-        }
+    else if( n == 1 ){
+        algn_res = align_lettre_mot(x[0],y,m);               
     }
+    
+    else if (m == 1){
 
+        /*on inverse les deux chaînes pour pouvoir utiliser align lettre mot*/
+        algn_res = align_lettre_mot(y[0],x,n);
+
+
+        /*On réinverse le résultat*/
+        char* tmp = algn_res->x;
+        algn_res->x = algn_res->y;
+        algn_res->y = tmp;
+    }
     else{
-        int j = coupure(x,y,n,m,Dist,I);
+        int j = coupure(x,y,n,m,Dist,I)-1;              //Attention : Les indices dans les mots dans coupure sont entre 1 et m
         int i = n/2;
+        char* x_gauche = (char*) malloc((i+1)*sizeof(char));
+        char* y_gauche = (char*) malloc((j+1)*sizeof(char));
 
+        for(int k = 0; k < i ; k++){
+            x_gauche[k] = x[k];
+        }
+        for(int k = 0; k < j ; k++){
+            y_gauche[k] = y[k];
+        }
+        x_gauche[i] = '\0';
+        y_gauche[i] = '\0';
 
         /*On fait nos deux sous alignements avec la coupure*/
-        Alignement* algn_1 = SOL_2(x,y,i,j,Dist,I);
+        Alignement* algn_1 = SOL_2(x_gauche,y_gauche,i,j,Dist,I);
         Alignement* algn_2 = SOL_2(x+i,y+j,n-i,m-j,Dist,I);
+
+        free(x_gauche);
+        free(y_gauche);
 
         /*On les combine*/
         algn_res = concatener_alignements(algn_1,algn_2);
     }
+
     return algn_res;
 }
 
